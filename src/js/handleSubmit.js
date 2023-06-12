@@ -39,7 +39,7 @@ function checkingLengthArray({ hits, totalHits }) {
 
   renderMarking(hits);
 
-  if (pageToFetch === 1) {
+  if (pageToFetch === 1 && hits.length > 0) {
     Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
   }
 }
