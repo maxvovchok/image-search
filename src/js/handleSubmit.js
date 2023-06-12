@@ -7,6 +7,11 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 axios.defaults.baseURL = `https://pixabay.com/api/?37154597-63d1fb6dbcb2f64553a93c693)}`;
 
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
+
 let pageToFetch = 1;
 let queryToFetch = '';
 refs.btnLoadMore.hidden = true;
@@ -33,7 +38,7 @@ function checkingLengthArray({ hits, totalHits }) {
       '❌ Sorry, there are no images matching your search query. Please try again.'
     );
     refs.btnLoadMore.hidden = true;
-  } else if (hits.length < 20) {
+  } else if (hits.length < 40) {
     refs.btnLoadMore.hidden = true;
   }
 
@@ -42,6 +47,8 @@ function checkingLengthArray({ hits, totalHits }) {
   if (pageToFetch === 1 && hits.length > 0) {
     Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
   }
+
+  lightbox.refresh();
 }
 
 async function getEvents(query, page) {
@@ -60,6 +67,7 @@ async function fetchEvents(keyword, page) {
         orientation: 'horizontal',
         safesearch: 'true',
         page: page,
+        per_page: 40,
       },
     });
     return data;
